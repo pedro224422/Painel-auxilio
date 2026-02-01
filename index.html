@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRh3f1D8_Opxr49pY6wH4vA-hL5-Uj8uYfHpg&usqp=CAU">
+    
+    <title>Auxílio @Pg Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --main-red: #ff0000;
+            --dark-red: #3d0a0a;
+            --bg-black: #0a0a0b;
+        }
+
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        #particles {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: -1;
+        }
+
+        .panel {
+            width: 320px;
+            background: rgba(10, 10, 11, 0.9);
+            border: 2px solid var(--main-red);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            color: var(--main-red);
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px var(--main-red);
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .btn {
+            background: var(--dark-red);
+            border: 1px solid var(--main-red);
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn.active {
+            background: var(--main-red);
+            box-shadow: 0 0 15px var(--main-red);
+        }
+
+        .status-bar {
+            margin-top: 20px;
+            height: 4px;
+            background: #222;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 0%;
+            height: 100%;
+            background: var(--main-red);
+            transition: 0.5s;
+        }
+
+        .footer {
+            margin-top: 15px;
+            font-size: 0.6rem;
+            color: #666;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="particles"></canvas>
+
+    <div class="panel">
+        <h1>AUXÍLIO @PG v1.0</h1>
+        
+        <div class="grid">
+            <button class="btn" onclick="toggle(this)">PRECISION</button>
+            <button class="btn" onclick="toggle(this)">AUTO-AIM</button>
+            <button class="btn" onclick="toggle(this)">FPS+</button>
+            <button class="btn" onclick="toggle(this)">FOV FIX</button>
+            <button class="btn" onclick="toggle(this)">BY-PASS</button>
+            <button class="btn" onclick="toggle(this)">ANTENA</button>
+        </div>
+
+        <div class="status-bar">
+            <div class="progress" id="bar"></div>
+        </div>
+
+        <button class="btn" style="width:100%; margin-top:15px; background:var(--main-red)" onclick="start()">INJETAR</button>
+
+        <div class="footer">STATUS: AGUARDANDO...</div>
+    </div>
+
+    <script>
+        function toggle(btn) {
+            btn.classList.toggle('active');
+        }
+
+        function start() {
+            let bar = document.getElementById('bar');
+            let width = 0;
+            let interval = setInterval(() => {
+                if (width >= 100) {
+                    clearInterval(interval);
+                    alert("INJETADO COM SUCESSO!");
+                } else {
+                    width++;
+                    bar.style.width = width + '%';
+                }
+            }, 30);
+        }
+
+        // Sistema de Partículas Hacker
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class P {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.v = Math.random() * 2 + 1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 0, 0, 0.5)';
+                ctx.fillRect(this.x, this.y, 2, 2);
+                this.y += this.v;
+                if(this.y > canvas.height) this.y = -5;
+            }
+        }
+        for(let i=0; i<50; i++) particles.push(new P());
+        function anim() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            particles.forEach(p => p.draw());
+            requestAnimationFrame(anim);
+        }
+        anim();
+    </script>
+</body>
+</html>
